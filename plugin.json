@@ -1,10 +1,10 @@
 {
-    "id": "com.mattermost.plugin-starter-template",
-    "name": "Plugin Starter Template",
-    "description": "This plugin serves as a starting point for writing a Mattermost plugin.",
-    "homepage_url": "https://github.com/mattermost/mattermost-plugin-starter-template",
-    "support_url": "https://github.com/mattermost/mattermost-plugin-starter-template/issues",
-    "release_notes_url": "https://github.com/mattermost/mattermost-plugin-starter-template/releases/tag/v0.1.0",
+    "id": "com.oming.mattermost-plugin-embed",
+    "name": "Embed",
+    "description": "Add a Your App or Website to the Mattermost.",
+    "homepage_url": "https://github.com/oming/mattermost-plugin-embed",
+    "support_url": "https://github.com/oming/mattermost-plugin-embed/issues",
+    "release_notes_url": "https://github.com/oming/mattermost-plugin-embed/releases/tag/v0.1.0",
     "icon_path": "assets/starter-template-icon.svg",
     "version": "0.1.0",
     "min_server_version": "6.2.1",
@@ -21,8 +21,50 @@
         "bundle_path": "webapp/dist/main.js"
     },
     "settings_schema": {
-        "header": "",
+        "header": "플러",
         "footer": "",
-        "settings": []
+        "settings": [
+            {
+                "key": "ProxyEnabled",
+                "display_name": "Proxy Enabled",
+                "type": "bool",
+                "default": false,
+                "help_text": "The usage of a proxy server is configurable. By default, a proxy server is not used. If a proxy server is to be used, the URL of the proxy server must be configured."
+            },
+            {
+                "key": "ProxyTarget",
+                "display_name": "Proxy Target",
+                "type": "dropdown",
+                "help_text": "Please choose the target for the proxy. You can select the built-in proxy server provided by the plugin or manually configured proxy server.",
+                "placeholder": "",
+                "default": "",
+                "options": [
+                    {
+                        "display_name": "Default - built-in proxy server.",
+                        "value": "default"
+                    },
+                    {
+                        "display_name": "Custom Proxy Server.",
+                        "value": "custom"
+                    }
+                ]
+            },
+            {
+                "key": "ProxyServerURL",
+                "display_name": "Proxy Server URL",
+                "type": "text",
+                "help_text": "If you are not using the built-in proxy server, enter the URL of the proxy server you intend to use. For example, if you are using Nginx as a reverse proxy, input its URL.",
+                "default": "",
+                "placeholder": "http://127.0.0.1/proxy"
+            },
+            {
+            "key": "ProductConfigs",
+            "display_name": "Product Configurations",
+            "type": "longtext",
+            "help_text": "(Optional) Please enter the service to embed in mattermost. By default, enter it in the format 'Title|ServerAddress' You can register multiple embed services by separating them with line breaks.",
+            "default": "",
+            "placeholder": "Website|https://my.company.com\nBlog|http://myblog.com\nTest1|http://127.0.0.1:9000"
+            }
+        ]
     }
 }

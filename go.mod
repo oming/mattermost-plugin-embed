@@ -1,4 +1,4 @@
-module github.com/mattermost/mattermost-plugin-starter-template
+module github.com/oming/mattermost-plugin-embed
 
 go 1.19
 

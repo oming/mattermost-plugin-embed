@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"net"
 	"reflect"
 
 	"github.com/pkg/errors"
@@ -18,6 +20,10 @@ import (
 // If you add non-reference types to your configuration struct, be sure to rewrite Clone as a deep
 // copy appropriate for your types.
 type configuration struct {
+	ProxyEnabled   bool
+	ProxyTarget    string
+	ProxyServerURL string
+	ProductConfigs string
 }
 
 // Clone shallow copies the configuration. Your implementation may require a deep copy if
@@ -76,8 +82,23 @@ func (p *Plugin) OnConfigurationChange() error {
 	if err := p.API.LoadPluginConfiguration(configuration); err != nil {
 		return errors.Wrap(err, "failed to load plugin configuration")
 	}
+	if err := configuration.IsValid(); err != nil {
+		return errors.Wrap(err, "configuration is not valid")
+	}
 
 	p.setConfiguration(configuration)
+
+	return nil
+}
+
+func (c *configuration) IsValid() error {
+	if c.ProxyEnabled == true {
+		if c.ProxyTarget == "custom" {
+			if c.ProxyServerURL != "" && net.ParseIP(c.ProxyServerURL) == nil {
+				return fmt.Errorf("ProxyServerURL parsing failed")
+			}
+		}
+	}
 
 	return nil
 }
